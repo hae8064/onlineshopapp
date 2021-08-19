@@ -20,7 +20,7 @@ class Body extends StatelessWidget {
               children: [
                 Container(
                   margin: EdgeInsets.only(top: size.height * 0.3),
-                  height: 350,
+                  height: 400,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -54,7 +54,7 @@ class Body extends StatelessWidget {
                                 style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.white,fontWeight: FontWeight.bold))
                           ])),
                           SizedBox(
-                            width: kDefaultPadding,
+                            width: kDefaultPadding * 6,
                           ),
                           Expanded(child: Image.asset(product.image))
                         ],

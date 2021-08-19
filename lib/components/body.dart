@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onlineshopapp/components/categories.dart';
+import 'package:onlineshopapp/components/item_cart.dart';
 import 'package:onlineshopapp/constants.dart';
 import 'package:onlineshopapp/details/details_screen.dart';
 import 'package:onlineshopapp/models/Product.dart';
@@ -34,7 +35,20 @@ class Body extends StatelessWidget {
                 crossAxisCount: 2,
                 childAspectRatio: 0.75),
             itemBuilder: (context, index) => ItemCard(
-              product: products[index], press: (){},
+              product: products[index],
+
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailScreen(
+                      product: products[index],
+                    ),
+                  ),
+                );
+              },
+
+              //유튜브 코드
               // press: () {Navigator.push(
               //   context,
               //   MaterialPageRoute(
@@ -49,48 +63,3 @@ class Body extends StatelessWidget {
   }
 }
 
-class ItemCard extends StatelessWidget {
-  final Product product;
-  final Function press;
-
-  const ItemCard({
-    Key? key,
-    required this.product,
-    required this.press,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: press(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(kDefaultPadding),
-
-              // height: 180,
-              // width: 160,
-              decoration: BoxDecoration(
-                  color: product.color,
-                  borderRadius: BorderRadius.circular(16)),
-              child: Image.asset(product.image),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 4),
-            child: Text(
-              product.title,
-              style: TextStyle(color: kTextLightColor),
-            ),
-          ),
-          Text(
-            "\$${product.price}",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )
-        ],
-      ),
-    );
-  }
-}
