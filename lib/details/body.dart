@@ -1,4 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onlineshopapp/components/Description.dart';
+import 'package:onlineshopapp/components/add_to_cart.dart';
+import 'package:onlineshopapp/components/cart_counter.dart';
+import 'package:onlineshopapp/components/color_and_style.dart';
+import 'package:onlineshopapp/components/counter_with_fav_btn.dart';
+import 'package:onlineshopapp/components/product_list_with_image.dart';
 import 'package:onlineshopapp/constants.dart';
 import 'package:onlineshopapp/models/Product.dart';
 
@@ -20,6 +28,10 @@ class Body extends StatelessWidget {
               children: [
                 Container(
                   margin: EdgeInsets.only(top: size.height * 0.3),
+                  padding: EdgeInsets.only(
+                      top: size.height * 0.12,
+                      left: kDefaultPadding,
+                      right: kDefaultPadding),
                   height: 400,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -28,44 +40,55 @@ class Body extends StatelessWidget {
                       topRight: Radius.circular(24),
                     ),
                   ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Aristocatic Hand Bag",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      Text(
-                        product.title,
-                        style: Theme.of(context).textTheme.headline4!.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      Row(
-                        children: [
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(text: "Price\n"),
-                            TextSpan(
-                                text: "\$${product.price}",
-                                style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.white,fontWeight: FontWeight.bold))
-                          ])),
-                          SizedBox(
-                            width: kDefaultPadding * 6,
-                          ),
-                          Expanded(child: Image.asset(product.image))
-                        ],
-                      )
+                      ColorAndSize(product: product),
+                      SizedBox(height: kDefaultPadding / 2,),
+                      Description(product: product),
+                      CounterWithFavBtn(),
+                      AddToCart(product: product)
                     ],
                   ),
-                )
+                ),
+                ProductTitleWithImage(product: product)
               ],
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class ColorDot extends StatelessWidget {
+  final Color color;
+  final bool isSelected;
+
+  const ColorDot({
+    Key? key,
+    required this.color,
+    this.isSelected = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin:
+          EdgeInsets.only(top: kDefaultPadding / 4, right: kDefaultPadding / 2),
+      padding: EdgeInsets.all(2.5),
+      height: 24,
+      width: 24,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: isSelected ? color : Colors.transparent,
+        ),
+      ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
+        ),
       ),
     );
   }
